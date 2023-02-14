@@ -1,0 +1,101 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block content %}
+
+	<!-- Title page -->
+	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('images/bg-02.jpg');">
+		<h2 class="ltext-105 cl0 txt-center">
+			Blog
+		</h2>
+	</section>	
+
+
+	<!-- Content page -->
+	<section class="bg0 p-t-62 p-b-60">
+		<div class="container">
+			<div class="row">
+				{% for blog in object_list %}
+				<div class="col-md-8 col-lg-9 p-b-80">
+					<div class="p-r-45 p-r-0-lg">
+						<!-- item blog -->
+						<div class="p-b-63">
+							<a href="{% url 'blogs:detail' pk=blog.pk %}" class="hov-img0 how-pos5-parent">
+								<img src="{{ blog.main_image.url }}" alt="IMG-BLOG">
+
+								<div class="flex-col-c-m size-123 bg9 how-pos5">
+									<span class="ltext-107 cl2 txt-center">
+										{{ blog.created_at|date:"d F Y"}}
+									</span>
+
+									{% comment %} <span class="stext-109 cl3 txt-center">
+										Jan 2018
+									</span> {% endcomment %}
+								</div>
+							</a>
+
+							<div class="p-t-32">
+								<h4 class="p-b-15">
+									<a href="{% url 'blogs:detail' pk=blog.pk %}" class="ltext-108 cl2 hov-cl1 trans-04">
+										{{ blog.title|truncatechars:'45'}}
+									</a>
+								</h4>
+
+								<p class="stext-117 cl6">
+									{{ object.body|safe }}
+								</p>
+
+								<div class="flex-w flex-sb-m p-t-18">
+									<span class="flex-w flex-m stext-111 cl2 p-r-30 m-tb-10">
+										<span>
+											<span class="cl4">By</span> {{ object.user.get_full_name }} 
+											<span class="cl12 m-l-4 m-r-6">|</span>
+										</span>
+
+										<span>
+											{% for tag in object.tags.all %}
+                                            <a href="{% url 'blogs:list' %}?tag={{ tag.pk }}">#{{ tag.name }}</a>
+                                        	{% endfor %}  
+											<span class="cl12 m-l-4 m-r-6">|</span>
+										</span>
+
+										<span>
+											{% if object.comments.values %}
+                                			<li>{{ object.comments.values.count }} Comments</li>
+                            				{% endif %}
+										</span>
+									</span>
+
+									<a href="{% url 'blogs:detail' pk=blog.pk %}" class="stext-101 cl2 hov-cl1 trans-04 m-tb-10">
+										Continue Reading
+
+										<i class="fa fa-long-arrow-right m-l-9"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+
+						<!-- Pagination -->
+						<div class="flex-l-m flex-w w-full p-t-10 m-lr--7">
+							<a href="#" class="flex-c-m how-pagination1 trans-04 m-all-7 active-pagination1">
+								1
+							</a>
+
+							<a href="#" class="flex-c-m how-pagination1 trans-04 m-all-7">
+								2
+							</a>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+	
+	<!-- Back to top -->
+	<div class="btn-back-to-top" id="myBtn">
+		<span class="symbol-btn-back-to-top">
+			<i class="zmdi zmdi-chevron-up"></i>
+		</span>
+	</div>
+
+{% endblock content %}

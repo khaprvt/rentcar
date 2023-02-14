@@ -1,0 +1,19 @@
+from django.contrib import admin
+from .models import CarBannerModel,ContactModel
+
+# Register your models here.
+
+@admin.register(CarBannerModel)
+class CarBannerModelAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'status']
+    list_display_links = ['id', 'title']
+    search_fields = ['title']
+    list_filter = ['created_at']
+    
+
+@admin.register(ContactModel)
+class ContactModelAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email', 'created_at']
+    list_display_links = ['name', 'email']
+    search_fields = ['name', 'email', 'massage']
+    list_filter = ['created_at']
